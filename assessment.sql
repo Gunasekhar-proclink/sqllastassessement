@@ -405,6 +405,32 @@ ORDER BY
 
 Normalize this table into 3NF (Third Normal Form). Specify all primary keys, foreign key constraints, unique constraints, not null constraints, and check constraints.
 
+
+CREATE TABLE customers (
+  customer_id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_name VARCHAR(100) NOT NULL,
+  customer_email VARCHAR(100) UNIQUE NOT NULL
+);
+
+CREATE TABLE products (
+  product_id INT AUTO_INCREMENT PRIMARY KEY,
+  product_name VARCHAR(100) NOT NULL,
+  product_category VARCHAR(50) NOT NULL,
+  product_price DECIMAL(10,2) CHECK (product_price > 0)
+);
+
+
+
+CREATE TABLE orders (
+  order_id INT AUTO_INCREMENT PRIMARY KEY,
+  customer_id INT NOT NULL,
+  product_id INT NOT NULL,
+  order_date DATE NOT NULL,
+  order_quantity INT CHECK (order_quantity > 0),
+  order_total_amount DECIMAL(10,2) NOT NULL,
+  FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+  FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
 ### ER Diagram (5 Marks)
 
 27. Using the normalized tables from Question 26, create an ER diagram. Include the entities, relationships, primary keys, foreign keys, unique constraints, not null constraints, and check constraints. Indicate the associations using proper ER diagram notation.
